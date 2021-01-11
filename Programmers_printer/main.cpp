@@ -19,7 +19,7 @@ int solution(vector<int> priorities, int location) {
 
     while (!que.empty()) {
         //그냥 queue에서 하나씩 pop시켜서 priorityqueue의 pop시킨 값과 중요도가 같은지 확인
-        //중요도가 같더라도 내가 알고싶은 location인지를 check해야하기 때문에 그냥 queue도 이용하는것!!
+        //중요도가 같더라도 내가 알고싶은 location인지를 check해야하기 때문에 그냥 queue도 이용하는것
         if (que.front().second == pque.top()) {
             if (que.front().first == location) {
                 return answer + 1;
