@@ -1,0 +1,55 @@
+//프로그래머스 카카오프렌즈 컬러링북 풀이 소스코드
+#include <vector>
+#include <queue>
+using namespace std;
+
+// 전역 변수를 정의할 경우 함수 내에 초기화 코드를 꼭 작성해주세요.
+int ax[4] = { -1,1,0,0 };
+int ay[4] = { 0,0,-1,1 };
+vector<int> solution(int m, int n, vector<vector<int>> picture) {
+    int number_of_area = 0;//영역의 개수
+    int max_size_of_one_area = 0;//영역의 최대 넓이
+    bool visited[101][101] = { 0, };//방문했던 곳을 표시하기 위한 variable
+    queue<pair<int, int>> q;
+
+    for (int j = 0; j < picture.size(); j++)//m이 세로의 길이
+    {
+        for (int i = 0; i < picture[j].size(); i++)//n이 가로의 길이
+        {
+            int area = 0;//영역의 넓이를 계산할 variable
+            if (picture[j][i] != 0 && !visited[i][j])
+            {
+                q.push({ i,j });
+                number_of_area++;
+                area++;
+                visited[i][j] = true;
+            }
+            while (!q.empty())
+            {
+                int x = q.front().first;
+                int y = q.front().second;
+                q.pop();
+
+                for (int z = 0; z < 4; z++)
+                {
+                    int xx = x + ax[z];
+                    int yy = y + ay[z];
+                    if (xx < 0 || xx >= n || yy < 0 || yy >= m)
+                        continue;
+                    if (picture[yy][xx] == picture[y][x] && !visited[xx][yy])
+                    {
+                        area++;
+                        q.push({ xx,yy });
+                        visited[xx][yy] = true;
+                    }
+                }
+            }
+            if (area > max_size_of_one_area)
+                max_size_of_one_area = area;
+        }
+    }
+    vector<int> answer(2);
+    answer[0] = number_of_area;
+    answer[1] = max_size_of_one_area;
+    return answer;
+}
