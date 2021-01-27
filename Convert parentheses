@@ -1,0 +1,50 @@
+def check(u):
+    k=0
+    num=0
+    for i in u:
+        if i=="(":
+            k+=1
+        elif i==")":
+            k-=1
+        if num==len(u)-1 and k==0 :
+            return True
+        if k<0:
+            print("false")
+            return False
+        num+=1
+        
+def solution(p):
+    answer = ''
+    numl=0
+    numr=0
+    u=""
+    v=""
+    if p=="":
+        return ""
+    if check(p)==True:
+        print("trueee")
+        return p
+    print("=========")
+    for seq in range(0,len(p)):
+        if p[seq]=="(":
+            numl+=1
+        else:
+            numr+=1
+        print("ing",numl,numr)
+        if seq!=0 and numl==numr:
+            print("numl==numr")
+            u=p[:seq+1]
+            v=p[seq+1:]
+            break
+    if check(u)==True:
+        answer+=u+solution(v)
+    else:
+        mid="("
+        mid+=solution(v)+")"
+        for i in range(1,len(u)-1):
+            if u[i]=="(":
+                mid+=")"
+            else:
+                mid+="("
+        answer+=mid
+    return answer
