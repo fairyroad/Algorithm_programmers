@@ -1,0 +1,14 @@
+from itertools import combinations
+from collections import Counter
+def solution(orders, course):
+    answer = []
+    for num in course:
+        tmp = []
+        for order in orders:
+            combination = combinations(sorted(order), num)
+            tmp += combination
+        counter = Counter(tmp)
+        if len(counter) != 0 and max(counter.values()) != 1:
+            answer += [''.join(result) for result in counter if counter[result] == max(counter.values())]
+
+    return sorted(answer)
