@@ -1,4 +1,5 @@
 
+   '''
     [카카오] 후보키문제
 
     relation -> [["100","ryan","music","2"],["200","apeach","math","2"],["300","tube","computer","3"],["400","con","computer","4"],["500","muzi","music","3"],["600","apeach","music","2"]]
@@ -22,4 +23,27 @@
     extend는 iterable한 모든 요소를 추가함(리스트를 확장시키는 것!!)
 
 
-![image](https://user-images.githubusercontent.com/74306759/126262905-c3f2fe79-3324-4122-8918-ce90ed881bb6.png)
+'''
+ 
+from itertools import combinations as combi
+def solution(relation):
+    row=len(relation)
+    col=len(relation[0])
+    
+    candidates=[]
+    for i in range(1, col+1):
+        candidates.extend(combi(range(col),i))
+    
+    unique=[]
+    for candi in candidates:
+        tmp = [tuple([item[i] for i in candi]) for item in relation]
+        if len(set(tmp)) == row:
+            unique.append(candi)
+    
+    answer=set(unique)
+    for i in range(len(unique)):
+        for j in range(i+1, len(unique)):
+            if len(unique[i]) == len(set(unique[i]) & set(unique[j])):
+                answer.discard(unique[j])
+        
+    return len(answer)
